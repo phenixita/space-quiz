@@ -749,25 +749,35 @@
 
     const letters = ["A", "B", "C", "D"];
     const quiz = document.querySelector("#quiz");
+    let missionQuestions = shuffleQuestions();
     let currentQuestion = 0;
     let score = 0;
     let answered = false;
     let scoreLog = [];
 
+    function shuffleQuestions() {
+      const shuffled = [...questions];
+      for (let index = shuffled.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+      }
+      return shuffled;
+    }
+
     function renderQuestion() {
       answered = false;
-      const item = questions[currentQuestion];
-      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      const item = missionQuestions[currentQuestion];
+      const progress = ((currentQuestion + 1) / missionQuestions.length) * 100;
       quiz.innerHTML = `
         <div class="topline">
           <div class="log-label"><span class="live-dot" aria-hidden="true"></span>Flight controller's log</div>
-          <div class="scorebox" aria-label="Score: ${score} out of ${questions.length}">
-            <span class="score-label">Score</span><span class="score-number" id="score">${score}<span class="sr-only"> out of ${questions.length}</span></span>
+          <div class="scorebox" aria-label="Score: ${score} out of ${missionQuestions.length}">
+            <span class="score-label">Score</span><span class="score-number" id="score">${score}<span class="sr-only"> out of ${missionQuestions.length}</span></span>
           </div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-meta"><span>MISSION PROGRESS</span><span>${currentQuestion + 1} / ${questions.length}</span></div>
-          <div class="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="${questions.length}" aria-valuenow="${currentQuestion + 1}">
+          <div class="progress-meta"><span>MISSION PROGRESS</span><span>${currentQuestion + 1} / ${missionQuestions.length}</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="${missionQuestions.length}" aria-valuenow="${currentQuestion + 1}">
             <div class="progress-fill" style="width:${progress}%"></div>
           </div>
         </div>
@@ -799,7 +809,7 @@
     function selectAnswer(selectedIndex) {
       if (answered) return;
       answered = true;
-      const item = questions[currentQuestion];
+      const item = missionQuestions[currentQuestion];
       const isCorrect = selectedIndex === item.answer;
       if (isCorrect) score += 1;
       scoreLog.push(isCorrect);
@@ -818,7 +828,7 @@
 
       const scoreDisplay = quiz.querySelector("#score");
       scoreDisplay.firstChild.textContent = score;
-      quiz.querySelector(".scorebox").setAttribute("aria-label", `Score: ${score} out of ${questions.length}`);
+      quiz.querySelector(".scorebox").setAttribute("aria-label", `Score: ${score} out of ${missionQuestions.length}`);
       const feedback = quiz.querySelector("#feedback");
       feedback.innerHTML = `
         <span class="feedback-icon" aria-hidden="true">${isCorrect ? "✦" : "↗"}</span>
@@ -827,14 +837,14 @@
       feedback.hidden = false;
       const next = quiz.querySelector(".next-button");
       next.disabled = false;
-      next.textContent = currentQuestion === questions.length - 1 ? "See your results →" : "Next question →";
+      next.textContent = currentQuestion === missionQuestions.length - 1 ? "See your results →" : "Next question →";
       next.focus();
     }
 
     function advance() {
       if (!answered) return;
       currentQuestion += 1;
-      if (currentQuestion === questions.length) {
+      if (currentQuestion === missionQuestions.length) {
         renderResults();
       } else {
         renderQuestion();
@@ -853,14 +863,15 @@
           <p class="eyebrow">FLIGHT COMPLETE · MISSION LOG CLOSED</p>
           <h1>${message}</h1>
           <p class="results-subtitle">${detail}</p>
-          <div class="result-score"><strong>${score}</strong><span>out of ${questions.length} correct</span></div>
-          <div class="stamp-row" aria-label="${score} correct answers out of ${questions.length}">
+          <div class="result-score"><strong>${score}</strong><span>out of ${missionQuestions.length} correct</span></div>
+          <div class="stamp-row" aria-label="${score} correct answers out of ${missionQuestions.length}">
             ${scoreLog.map((correct, index) => `<span class="stamp ${correct ? "is-correct" : ""}" title="Question ${index + 1}: ${correct ? "correct" : "incorrect"}">${correct ? "✓" : "·"}</span>`).join("")}
           </div>
           <button class="restart-button" type="button">Fly another mission ↻</button>
         </div>
       `;
       quiz.querySelector(".restart-button").addEventListener("click", () => {
+        missionQuestions = shuffleQuestions();
         currentQuestion = 0;
         score = 0;
         scoreLog = [];
