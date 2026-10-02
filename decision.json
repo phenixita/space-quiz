@@ -1,0 +1,190 @@
+{
+  "title": "Choose the visual world",
+  "question": "The roll assigned Flight Controller's Log. Keep it, take an alternate, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Flight Controller's Log",
+      "kicker": "THE ROLL",
+      "lineage": "Working flight logs and handwritten mission checklists",
+      "thesis": "Ten historic flights become one clear, hand-kept record.",
+      "palette": ["#172f43", "#f2eadb", "#32745e", "#bd503e", "#d5ad52"],
+      "materials": ["uncoated log paper", "inked rules", "pencil annotations"],
+      "viewport": "A narrow flight log frames one mission question, four answer rows, the live score, and the next step.",
+      "risk": "Can feel like homework unless each answer lands with a lively flight-status mark.",
+      "raised": [
+        {
+          "from": "Cassette J-card",
+          "raise": "The ten entries form one finite sortie, with an unmistakable final landing."
+        },
+        {
+          "from": "Centre-rail reference setting",
+          "raise": "Question number, progress, and score keep a steady alignment throughout the run."
+        },
+        {
+          "from": "Saville catalog sleeve",
+          "raise": "Every state gets a readable label as well as color; none are coded by color alone."
+        }
+      ],
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "flight log heading", "x": 1, "y": 0, "w": 10, "h": 1},
+          {"label": "question number / score", "x": 1, "y": 1, "w": 10, "h": 1, "accent": true},
+          {"label": "mission question", "x": 1, "y": 2, "w": 10, "h": 2},
+          {"label": "answer rows", "x": 1, "y": 4, "w": 10, "h": 4},
+          {"label": "flight status / next", "x": 1, "y": 8, "w": 10, "h": 1, "accent": true}
+        ]
+      }
+    },
+    {
+      "id": "model-pick",
+      "label": "Crewed-Mission Passport",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Family travel passports and collected entry stamps",
+      "thesis": "Each correct answer earns a stamp on a ten-stop spaceflight itinerary.",
+      "palette": ["#f1e6cd", "#17364d", "#c36542", "#42745d", "#dfbd65"],
+      "materials": ["linen passport stock", "rubber stamps", "route marks"],
+      "viewport": "A passport page pairs a single mission question with a small itinerary; answers add a clearly labeled travel mark.",
+      "risk": "The travel metaphor must stay secondary to the historical mission facts.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "passport title", "x": 1, "y": 0, "w": 10, "h": 1},
+          {"label": "mission route / score", "x": 1, "y": 1, "w": 10, "h": 2, "accent": true},
+          {"label": "mission question", "x": 1, "y": 3, "w": 10, "h": 2},
+          {"label": "four entry choices", "x": 1, "y": 5, "w": 10, "h": 3},
+          {"label": "passport stamp / next stop", "x": 1, "y": 8, "w": 10, "h": 1, "accent": true}
+        ]
+      }
+    },
+    {
+      "id": "challenger-warm-app",
+      "label": "Warm Consumer App",
+      "verdict": "competitive",
+      "lineage": "Friendly consumer apps with generous touch controls",
+      "thesis": "A welcoming quiz interface makes every choice easy to spot and use.",
+      "palette": ["#f4efe6", "#fffdfa", "#315fcb", "#347353"],
+      "materials": ["warm paper ground", "soft-cornered answer panels"],
+      "viewport": "A centered question sits above four spacious answer controls and one unmistakable action.",
+      "case": "Fuses cleanly: especially approachable and clear for a family audience; less distinctively about historic flight.",
+      "risk": "Could read as a generic quiz if mission details do not lead.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "welcome / progress", "x": 1, "y": 0, "w": 10, "h": 1},
+          {"label": "question", "x": 1, "y": 1, "w": 10, "h": 2},
+          {"label": "large answer controls", "x": 1, "y": 3, "w": 10, "h": 5},
+          {"label": "single action", "x": 1, "y": 8, "w": 10, "h": 1, "accent": true}
+        ]
+      }
+    },
+    {
+      "id": "challenger-orienteering",
+      "label": "Flight-Path Map",
+      "verdict": "competitive",
+      "lineage": "Orienteering maps and numbered checkpoints",
+      "thesis": "A plotted route makes progress through the mission sequence tangible.",
+      "palette": ["#fffefa", "#314431", "#c7b871", "#397393", "#6b52aa"],
+      "materials": ["contour rules", "numbered route markers", "course overlay"],
+      "viewport": "One question is the active checkpoint; the progress line marks the route already flown.",
+      "case": "Fuses cleanly: route markers clarify sequence and progress, while a map can distract from the mission facts.",
+      "risk": "The map must remain a quiet wayfinding aid rather than become the content.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "route and checkpoints", "x": 0, "y": 0, "w": 12, "h": 2, "accent": true},
+          {"label": "active question", "x": 1, "y": 2, "w": 10, "h": 2},
+          {"label": "checkpoint choices", "x": 1, "y": 4, "w": 10, "h": 4},
+          {"label": "route status", "x": 1, "y": 8, "w": 10, "h": 1}
+        ]
+      }
+    },
+    {
+      "id": "challenger-split-flap",
+      "label": "Split-Flap Departure Board",
+      "verdict": "competitive",
+      "lineage": "Rail concourse boards and their live departure rows",
+      "thesis": "Historic flights arrive in a crisp, memorable mission sequence.",
+      "palette": ["#111716", "#f1eee4", "#c89c40", "#bd4c46"],
+      "materials": ["matte flap cells", "painted type", "ruled rows"],
+      "viewport": "A board-like title and flight number lead into one clearly separated question and its choices.",
+      "case": "Fuses cleanly: the departure sequence evokes real missions, but board language is less natural for answering a quiz.",
+      "risk": "Character-flip motion must never delay or obscure an answer.",
+      "wireframe": {
+        "cols": 12,
+        "rows": 10,
+        "regions": [
+          {"label": "board heading", "x": 0, "y": 0, "w": 12, "h": 1},
+          {"label": "flight / score columns", "x": 0, "y": 1, "w": 12, "h": 1, "accent": true},
+          {"label": "question row", "x": 0, "y": 2, "w": 12, "h": 2},
+          {"label": "four answer rows", "x": 0, "y": 4, "w": 12, "h": 4},
+          {"label": "status row", "x": 0, "y": 8, "w": 12, "h": 1}
+        ]
+      }
+    },
+    {
+      "id": "challenger-cassette",
+      "label": "Cassette J-Card",
+      "verdict": "declined",
+      "lineage": "Hand-ruled mixtape tracklists",
+      "thesis": "A tightly sequenced tracklist gives the quiz a finite, satisfying arc.",
+      "palette": ["#f8f6ed", "#263c6b", "#d04f3a", "#d0b351"],
+      "materials": ["lined card stock", "ballpoint marks", "running index"],
+      "viewport": "A side-A-like list moves through the ten questions, then flips to a final score.",
+      "case": "Fuses poorly: tape-side conventions obscure the real mission chronology.",
+      "kept": "Keep its finite-sequence discipline: the ten entries end in a clear final landing."
+    },
+    {
+      "id": "challenger-reference-rail",
+      "label": "Centre-Rail Reference Setting",
+      "verdict": "declined",
+      "lineage": "Two-column reference editions with a marked centre rail",
+      "thesis": "A stable alignment rail keeps question metadata in a consistent place.",
+      "palette": ["#f3ead9", "#171717", "#b13d2c"],
+      "materials": ["unbleached paper", "fine rules", "rubric ink"],
+      "viewport": "A slim centre rail carries question number and score between compact text blocks.",
+      "case": "Fuses poorly: a reference-edition layout asks too much reading effort of a family quiz.",
+      "kept": "Keep the dependable alignment of question, score, and progress."
+    },
+    {
+      "id": "challenger-saville-sleeve",
+      "label": "Catalog Sleeve",
+      "verdict": "declined",
+      "lineage": "Color-coded industrial record sleeves",
+      "thesis": "A bold, minimal signal makes active flight status unmistakable.",
+      "palette": ["#101315", "#f4f2eb", "#78ae76", "#d15c4d"],
+      "materials": ["matte board", "white plot lines", "coded color strip"],
+      "viewport": "A single mission record owns the field, with score and status as high-contrast marks.",
+      "case": "Fuses poorly: coded and sparse controls hide too much from young learners.",
+      "kept": "Keep strong contrast and give every state a plain-language label."
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A familiar, straightforward quiz interface, executed with care.",
+    "palette": ["#ffffff", "#172f43", "#315fcb", "#347353"],
+    "materials": ["clean stacked layout", "standard controls"],
+    "viewport": "A centered question card, progress bar, score, four answer buttons, and a results state.",
+    "risk": "Clear and familiar, but visually interchangeable with many quizzes.",
+    "wireframe": {
+      "cols": 12,
+      "rows": 10,
+      "regions": [
+        {"label": "title / progress", "x": 1, "y": 0, "w": 10, "h": 2},
+        {"label": "question", "x": 1, "y": 2, "w": 10, "h": 2},
+        {"label": "answer buttons", "x": 1, "y": 4, "w": 10, "h": 4},
+        {"label": "feedback / next", "x": 1, "y": 8, "w": 10, "h": 1}
+      ]
+    }
+  },
+  "steer": true
+}
