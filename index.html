@@ -290,6 +290,20 @@
     .result-emoji { margin: 2px 0 13px; font-size: 58px; line-height: 1; animation: pop 600ms cubic-bezier(.2,1.5,.5,1) both; }
     .results h2 { margin-bottom: 8px; font-size: 30px; }
     .result-score { margin: 0; color: var(--accent); font-size: 16px; font-weight: 800; }
+    .result-best { margin: 8px 0 0; color: var(--navy); font-size: 14px; font-weight: 800; }
+    .result-record {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 5px 10px;
+      border: 1px solid color-mix(in srgb, var(--green) 45%, var(--line));
+      border-radius: 999px;
+      color: var(--green);
+      background: var(--green-soft);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+    .result-record[hidden] { display: none; }
     .result-copy { max-width: 360px; margin: 12px auto 25px; color: var(--muted); font-size: 14px; }
     .result-stamp {
       display: inline-block;
@@ -369,6 +383,8 @@
         <div class="result-stamp">Flight report · Earth control</div>
         <h2 id="result-title"></h2>
         <p class="result-score" id="result-score"></p>
+        <p class="result-best" id="result-best"></p>
+        <p class="result-record" id="result-record" hidden></p>
         <p class="result-copy" id="result-copy"></p>
         <button class="replay-button" id="replay-button" type="button">Launch another mission <span aria-hidden="true">↻</span></button>
       </div>
@@ -402,9 +418,32 @@
     const nextButton = document.getElementById("next-button");
     const quizPanel = document.getElementById("quiz-panel");
     const resultsPanel = document.getElementById("results-panel");
+    const personalBestKey = "orbitAcademyPersonalBest";
     let current = 0;
     let score = 0;
     let answered = false;
+
+    function readPersonalBest() {
+      try {
+        const saved = window.localStorage.getItem(personalBestKey);
+        const value = Number(saved);
+        return {
+          available: true,
+          score: saved !== null && /^\d+$/.test(saved) && Number.isInteger(value) && value <= questions.length ? value : null
+        };
+      } catch {
+        return { available: false, score: null };
+      }
+    }
+
+    function savePersonalBest(value) {
+      try {
+        window.localStorage.setItem(personalBestKey, String(value));
+        return true;
+      } catch {
+        return false;
+      }
+    }
 
     function renderQuestion() {
       const question = questions[current];
@@ -469,17 +508,36 @@
       quizPanel.hidden = true;
       resultsPanel.hidden = false;
       const percent = score / questions.length;
+      const savedBest = readPersonalBest();
+      let personalBest = savedBest.score;
+      let isNewPersonalBest = false;
+      let storageUnavailable = !savedBest.available;
+
+      if (savedBest.available && (personalBest === null || score > personalBest)) {
+        isNewPersonalBest = true;
+        if (savePersonalBest(score)) personalBest = score;
+        else storageUnavailable = true;
+      }
+
       const result = percent === 1
-        ? ["🌟", "Stellar work!", "10 out of 10 — a perfect orbit.", "You know your way around the universe. Mission control is very impressed."]
+        ? ["🌟", "Stellar work!", `${questions.length} out of ${questions.length} — a perfect orbit.`, "You know your way around the universe. Mission control is very impressed."]
         : percent >= .7
-          ? ["🚀", "Out of this world!", `${score} out of 10 — excellent flying.`, "You're a natural space explorer. Keep chasing those far horizons."]
+          ? ["🚀", "Out of this world!", `${score} out of ${questions.length} — excellent flying.`, "You're a natural space explorer. Keep chasing those far horizons."]
           : percent >= .4
-            ? ["🪐", "Nice work, explorer!", `${score} out of 10 — a strong start.`, "Every great mission starts with curiosity. There's a whole universe left to discover."]
-            : ["🌙", "Rookie astronaut!", `${score} out of 10 — training complete.`, "The cosmos is full of surprises. Take another flight and see what you discover."];
+            ? ["🪐", "Nice work, explorer!", `${score} out of ${questions.length} — a strong start.`, "Every great mission starts with curiosity. There's a whole universe left to discover."]
+            : ["🌙", "Rookie astronaut!", `${score} out of ${questions.length} — training complete.`, "The cosmos is full of surprises. Take another flight and see what you discover."];
       document.getElementById("result-emoji").textContent = result[0];
       document.getElementById("result-title").textContent = result[1];
       document.getElementById("result-score").textContent = result[2];
-      document.getElementById("result-copy").textContent = result[3];
+      document.getElementById("result-best").textContent = personalBest === null
+        ? "Personal best: unavailable"
+        : `Personal best: ${personalBest} / ${questions.length}`;
+      const recordEl = document.getElementById("result-record");
+      recordEl.hidden = !isNewPersonalBest;
+      recordEl.textContent = storageUnavailable ? "New high score this run!" : "New personal best!";
+      document.getElementById("result-copy").textContent = result[3] + (
+        storageUnavailable ? " Browser storage is unavailable, so this score could not be saved." : ""
+      );
       document.getElementById("announcement").textContent = `Mission complete. ${result[2]}`;
       document.getElementById("replay-button").focus();
     }
